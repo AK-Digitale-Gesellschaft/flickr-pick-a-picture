@@ -47,7 +47,7 @@ require_once(PICAPICK_PATH . "/admin/settings.php");
  **/
 add_filter('media_upload_tabs', 'pac_pickapic_upload_tab');
 function pac_pickapic_upload_tab($tabs) {
-    $tabs['pickapictab'] = 'Flickr - Pick a Pic';
+    $tabs['pickapictab'] = 'Freie Fotos';
     return $tabs;
 }
 
@@ -159,29 +159,29 @@ function pac_pickapic_search_form( $form_title ) {
         <table id="tb_search_form" class="describe"><tbody>
             <tr>
                 <th valign="top" scope="row" class="label" style="width:130px;">
-                    <span class="alignleft"><label for="insertonly[searchterms]"><?php _e('Search terms', 'pickapic'); ?> </label></span>
+                    <span class="alignleft"><label for="insertonly[searchterms]"><?php _e('Suche', 'pickapic'); ?> </label></span>
                     <span class="alignright"><abbr id="status_img" title="required" class="required">*</abbr></span>
                 </th>
                 <td class="field"><input id="pac_pickapic_search_term" name="pac_pickapic_search_term" value="" type="text" aria-required="true" onkeydown="flickrSearch.handleKeyPress(event);" onkeyup="flickrSearch.validate();" onblur="flickrSearch.validate();"></td>
             </tr>
-            <tr><td></td><td class="help"> <?php _e('Look for photos whose title, description or tags contain the search terms. You can exclude results that match a term by prepending it with a - character.', 'pickapic'); ?></td></tr>
+            <tr><td></td><td class="help"> <?php _e('Sucht nach Fotos deren Titel, Beschreibung oder Schlagwörter den Suchbegriff enthalten. Wenn Du Begriffe ausschließen willst, musst du ihnen ein - voransetzen.', 'pickapic'); ?></td></tr>
             <tr>
                 <th valign="top" scope="row" class="label">
-                    <span class="alignleft"><label for="insertonly[results]"> <?php _e('Results per page', 'pickapic'); ?> </label></span>
+                    <span class="alignleft"><label for="insertonly[results]"> <?php _e('Resultate pro Seite', 'pickapic'); ?> </label></span>
                 </th>
                 <td class="field">
                     <select id="pac_pickapic_results_per_page" name="pac_pickapic_results_per_page">
-                        <option value="14" selected="selected">14</option>
+                        <option value="14">14</option>
                         <option value="28">28</option>
                         <option value="63">63</option>
-                        <option value="112">112</option>
+                        <option value="250" selected="selected">250</option>
                     </select>
                 </td>
             </tr>
         <tr class="image-only">
             <td></td>
             <td>
-                <input type="button" id="search_button" class="button" style="color:#bbb;" value=<?php _e( "Search", 'pickapic' ); ?> onclick="flickrSearch.search()" name="pac_pickapic_search" />
+                <input type="button" id="search_button" class="button" style="color:#bbb;" value=<?php _e( "Suchen", 'pickapic' ); ?> onclick="flickrSearch.search()" name="pac_pickapic_search" />
             </td>
         </tr>
 
@@ -234,7 +234,7 @@ function pac_pickapic_flickr_search($search_term, $results_per_page, $page) {
         'api_key'        => pac_pickapic_get_option('flickrapikey'),
         'method'         => 'flickr.photos.search',
         'format'         => 'php_serial'
-    );
+    );		
     $encoded_params = array();
     foreach ($params as $k => $v){
         $encoded_params[] = urlencode($k).'='.urlencode($v);
@@ -281,9 +281,9 @@ function media_pac_pickapic_search_results( $search_term, $results_per_page = 12
 
     $pictures = $rsp_obj['photos']['photo'];
     if ( count($pictures) ){
-        echo '<h3 class="media-title" style="padding:1em 0 0 10px; margin:0px;">'.__('Search results for: ','pickapic').'"'.$search_term.'"</h3>';
+        echo '<h3 class="media-title" style="padding:1em 0 0 10px; margin:0px;">'.__('Ergebnis für: ','pickapic').'"'.$search_term.'"</h3>';
     } else {
-        echo '<h3 class="media-title" style="padding:1em 0 0 10px; margin:0px;">'.__('No results found for: ','pickapic').'"'.$search_term.'"</h3>';
+        echo '<h3 class="media-title" style="padding:1em 0 0 10px; margin:0px;">'.__('Nichts gefunden zu: ','pickapic').'"'.$search_term.'"</h3>';
     }
     // The total amount of results retuned by flickr.  Please have in mind that Flickr will 
     // return at most 4.000 results for any given search query. 
@@ -340,11 +340,11 @@ function media_pac_pickapic_search_results( $search_term, $results_per_page = 12
     <div id="frm_image_results" style="margin-left:13px">
     <?php
     while($pic = array_shift($pictures)){
-        $flickr_farm_thumb_url = 'http://farm'.$pic['farm'].'.static.flickr.com/'.$pic['server'].'/'.$pic['id'].'_'.$pic['secret'].'_t.jpg';
+        $flickr_farm_thumb_url = 'http://farm'.$pic['farm'].'.static.flickr.com/'.$pic['server'].'/'.$pic['id'].'_'.$pic['secret'].'_m.jpg';
         $flickr_farm_url = 'http://farm'.$pic['farm'].'.static.flickr.com/'.$pic['server'].'/'.$pic['id'].'_'.$pic['secret'].'.jpg';
         ?>
-        <div style="float:left; position:relative; width:105px; height:145px; background-color:#eee; border:0px solid #aaa; margin:1px; margin-bottom:10px;">
-        <form class="frm_image_result" style="width:100px; margin:0 auto; text-align:center;" enctype="multipart/form-data" action="<?php esc_html($form_action_url);?>" class="media-upload-form type-form validate" method="post">
+        <div style="float:left; position:relative; width:240px; height:285px; background-color:#eee; border:0px solid #aaa; margin:1px; margin-bottom:10px;">
+        <form class="frm_image_result" style="width:240px; margin:0 auto; text-align:center;" enctype="multipart/form-data" action="<?php esc_html($form_action_url);?>" class="media-upload-form type-form validate" method="post">
             <?php wp_nonce_field( 'pac_pickapic_nonce', 'pac_pickapic_nonce_field' ); ?>
             <a id="single_image" href="<?php echo $flickr_farm_url;?>">
                 <img style="margin-top:5px" src="<?php echo $flickr_farm_thumb_url; ?>"/>
@@ -360,6 +360,15 @@ function media_pac_pickapic_search_results( $search_term, $results_per_page = 12
     ?>
     </div> <!-- #frm_image_results -->
     <?php
+		// Displays navigation
+    if ( $page_links ) {
+        echo "<div class='tablenav' style='margin-right:14px'>\n";
+        echo "\t<div class='tablenav-pages'>";
+        echo "\t<span class=\"displaying-num\">$total ".__('Results', 'pickapic')."</span>";
+        echo $page_links;
+        echo "\t</div>\n";
+        echo "</div>\n";
+    }
     pac_pickapic_search_form( __("New search", 'pickapic') );
 }
 
@@ -493,9 +502,9 @@ function media_pac_pickapic_final_form() {
             <?php
 
                 if ( version_compare( $wp_version, '3.4', '<') ) {
-                    $excerpt = __('By: '.$flickr_info['owner'], 'pickapic');
+                    $excerpt = __('Foto: '.$flickr_info['owner'], 'pickapic');
                 } else {
-                    $excerpt = __('By: ', 'pickapic')."<a href='".$flickr_info['url']."' target='_blank'>".$flickr_info['owner']."</a>";
+                    $excerpt = __('Foto: ', 'pickapic')."<a href='".$flickr_info['url']."' target='_blank'>".$flickr_info['owner']."</a>";
 
                     $show_license = pac_pickapic_get_option('flickrshowlicense');
                     if ( $show_license ) {
@@ -621,7 +630,7 @@ function pac_pickapic_custom_img_caption_shortcode( $a , $attr, $content = null)
     }
 
     // Rebuild the caption by adding credits to original flickr image owner
-    $caption = __('By: ', 'pickapic')."<a href='".$flickr_photo_url."' target='_blank'>".$flickr_owner."</a>";
+    $caption = __('Foto: ', 'pickapic')."<a href='".$flickr_photo_url."' target='_blank'>".$flickr_owner."</a>";
 
     if ( $id ) { 
         $id = 'id="' . esc_attr($id) . '" ';
@@ -762,7 +771,7 @@ function pac_pickapic_gallery_shortcode($val, $attr) {
                 $output .= "
                     <{$captiontag} class='wp-caption-text gallery-caption'>
                     " . 
-                    __('By: ', 'pickapic')."<a href='".$flickr_photo_url."' target='_blank'>".$flickr_owner."</a>".
+                    __('Foto: ', 'pickapic')."<a href='".$flickr_photo_url."' target='_blank'>".$flickr_owner."</a>".
                     "</{$captiontag}>";
             }
 		}
@@ -788,9 +797,9 @@ add_filter('post_gallery', 'pac_pickapic_gallery_shortcode', 10, 2);
 function pac_pickapic_media_buttons($editor_id = '') {
 	$img = '<img src="' . esc_url( plugin_dir_url( dirname(__FILE__).'/pick-a-pic.php' ).'icoWPcam.png' ) . '" width="15" height="15" />';
     // TODO: postear esto!!
-	echo '<a href="' . add_query_arg('tab','pickapictab', esc_url( get_upload_iframe_src() ) ). '" class="thickbox add_media" id="' . esc_attr( $editor_id ) . '-add_media" title="' . esc_attr__( 'Flickr - pick a pic', 'pickapic' ) . '" onclick="return false;">' . sprintf( $img ) . '</a>';
+	echo '<a href="' . add_query_arg('tab','pickapictab', esc_url( get_upload_iframe_src() ) ). '" class="thickbox add_media" id="' . esc_attr( $editor_id ) . '-add_media" title="' . esc_attr__( 'Flickr - pick a pic', 'pickapic' ) . '" onclick="return false;">' . sprintf( $img ) . ' Freies Foto suchen</a>';
 }
-add_action( 'media_buttons', 'pac_pickapic_media_buttons', 20 );
+//add_action( 'media_buttons', 'pac_pickapic_media_buttons', 20 );
 
 /**
  * Load language file.
@@ -831,7 +840,7 @@ function pac_pickapic_get_option($name){
         'flickrapikey'      => PICKAPIC_FLICKR_API_KEY,
         'flickrlicenses'    => PICKAPIC_FLICKR_LICENSES_SELECTED,
         'flickrsort'        => PICKAPIC_FLICKR_SORT,
-        'flickrshowlicense' => 0
+        'flickrshowlicense' => 1
     ));
     return $options[$name];
 }
