@@ -1,7 +1,7 @@
 <?php
 
 // Default API KEY
-define( 'PICKAPIC_FLICKR_API_KEY', '9b49c71260f91bf24bff8e06902dfc45' );
+define( 'PICKAPIC_FLICKR_API_KEY', 'b9f0d341e3aab89a09e84c6d88d50539' );
 
 // Default Flickr image size
 define( 'PICKAPIC_DEFAULT_FLICKR_IMG_SIZE', 'Large' );
