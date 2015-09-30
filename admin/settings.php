@@ -1,10 +1,10 @@
 <?php
 
 // Default API KEY
-define( 'PICKAPIC_FLICKR_API_KEY', 'b9f0d341e3aab89a09e84c6d88d50539' );
+define( 'PICKAPIC_FLICKR_API_KEY', '9b49c71260f91bf24bff8e06902dfc45' );
 
 // Default Flickr image size
-define( 'PICKAPIC_DEFAULT_FLICKR_IMG_SIZE', 'Medium' );
+define( 'PICKAPIC_DEFAULT_FLICKR_IMG_SIZE', 'Large' );
 
 // Flickr image sizes
 define ("FLICKR_IMG_SIZES", serialize ( array (
@@ -33,7 +33,7 @@ define('PICKAPIC_FLICKR_LICENSES', serialize ( array(
 )));
 
 // Default Flickr Licenses
-define( 'PICKAPIC_FLICKR_LICENSES_SELECTED', '4,7' ); // those images with license 4 or 7 (http://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html)
+define( 'PICKAPIC_FLICKR_LICENSES_SELECTED', '4,5,7' ); // those images with license 4 or 7 (http://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html)
 
 // Default Flickr sort order
 define( 'PICKAPIC_FLICKR_SORT', 'relevance' );
@@ -120,16 +120,14 @@ function pac_pickapic_render_flickr_licenses(){
     $options = get_option('pac_pickapic_options',array('flickrlicenses' => PICKAPIC_FLICKR_LICENSES_SELECTED));
     $licenses = explode(",", $options['flickrlicenses']);
     ?>
-    <form>
-        <input name="pac_pickapic_options[flickrlicenses_4]" type="checkbox" <?php pac_pickapic_checkbox_selected(4, $licenses); ?> value="4">Attribution License<br>
-        <input name="pac_pickapic_options[flickrlicenses_6]" type="checkbox" <?php pac_pickapic_checkbox_selected(6, $licenses); ?> value="6">Attribution-NoDerivs License<br>
-        <input name="pac_pickapic_options[flickrlicenses_3]" type="checkbox" <?php pac_pickapic_checkbox_selected(3, $licenses); ?> value="3">Attribution-NonCommercial-NoDerivs License<br>
-        <input name="pac_pickapic_options[flickrlicenses_2]" type="checkbox" <?php pac_pickapic_checkbox_selected(2, $licenses); ?> value="2">Attribution-NonCommercial License<br>
-        <input name="pac_pickapic_options[flickrlicenses_1]" type="checkbox" <?php pac_pickapic_checkbox_selected(1, $licenses); ?> value="1">Attribution-NonCommercial-ShareAlike License<br>
-        <input name="pac_pickapic_options[flickrlicenses_5]" type="checkbox" <?php pac_pickapic_checkbox_selected(5, $licenses); ?> value="5">Attribution-ShareAlike License<br>
-        <input name="pac_pickapic_options[flickrlicenses_7]" type="checkbox" <?php pac_pickapic_checkbox_selected(7, $licenses); ?> value="7">No known copyright restrictions<br>
-        <input name="pac_pickapic_options[flickrlicenses_0]" type="checkbox" <?php pac_pickapic_checkbox_selected(0, $licenses); ?> value="0">All Rights Reserved
-    </form>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(4, $licenses); ?> value="4">Attribution License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(6, $licenses); ?> value="6">Attribution-NoDerivs License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(3, $licenses); ?> value="3">Attribution-NonCommercial-NoDerivs License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(2, $licenses); ?> value="2">Attribution-NonCommercial License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(1, $licenses); ?> value="1">Attribution-NonCommercial-ShareAlike License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(5, $licenses); ?> value="5">Attribution-ShareAlike License<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(7, $licenses); ?> value="7">No known copyright restrictions<br>
+        <input name="pac_pickapic_options[]" type="checkbox" <?php pac_pickapic_checkbox_selected(0, $licenses); ?> value="0">All Rights Reserved
     <?php 
 }
 
